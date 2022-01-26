@@ -1,7 +1,6 @@
 // g++ -nodefaultlibs -fno-exceptions -fno-rtti -std=c++17 -c <file.cpp> -o <outfile.o>
 // gcc 
 
-export module slimstd;
 #ifndef _SLIMSTD_HPP
 #define _SLIMSTD_HPP
 

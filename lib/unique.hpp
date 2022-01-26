@@ -1,5 +1,4 @@
-import slimstd;
-
+#include <slimstd.hpp>
 ////
 // Unique class; same as std::unique_ptr
 ////
