@@ -6,6 +6,7 @@ const std = @import("std");
 
 const cpp_flags = .{
     "-nostdlib++",
+    "-nostdlib",
     "-fno-exceptions",
     "-fno-rtti",
     "-std=c++2a",
@@ -27,7 +28,7 @@ pub fn build(b: *std.build.Builder) void {
     if (mode == .Debug) {
         cppout.addCSourceFileSource(.{
             .source = .{ .path = "src/example.cpp" },
-            .args = &(cpp_flags ++ .{"-O2"}),
+            .args = &(cpp_flags ++ .{"-g"}),
         });
     } else if (mode == .ReleaseFast or mode == .ReleaseSafe) {
         cppout.addCSourceFileSource(.{
