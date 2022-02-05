@@ -1,3 +1,7 @@
+#pragma once
+#ifndef _SLIMSTD_TYPE_TRAITS
+#define _SLIMSTD_TYPE_TRAITS
+
 #include "slimstd.hpp"
 
 namespace slimstd {
@@ -64,3 +68,5 @@ namespace slimstd {
 
   template <bool _Bp, class _Tp = void> using enable_if_t = typename enable_if<_Bp, _Tp>::type;
 }
+
+#endif

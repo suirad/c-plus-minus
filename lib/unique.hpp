@@ -1,68 +1,77 @@
+#pragma once
+#ifndef _SLIMSTD_UNIQUE
+#define _SLIMSTD_UNIQUE
+
 #include "slimstd.hpp"
 #include "type_traits.hpp"
 ////
 // Unique class; same as std::unique_ptr
 ////
-// TODO: distiguish between single item ptrs and arrays for destructors
 namespace slimstd {
   template<typename T, bool Is_Array = false>
-  struct unique_ptr {
-    T* ptr = nullptr;
+  class unique_ptr {
+    public:
+      unique_ptr(){}
 
-    unique_ptr(){}
+      unique_ptr(T* p){
+        this->ptr = p;
+      }
 
-    unique_ptr(T* p){
-      this->ptr = p;
-    }
+      unique_ptr(unique_ptr&& old) : ptr(nullptr) {
+        this->ptr = old.ptr;
+        old.ptr = nullptr;
+      }
 
-    unique_ptr(unique_ptr&& old) : ptr(nullptr){
-      this->ptr = old.ptr;
-      old.ptr = nullptr;
-    }
+      unique_ptr& operator=(unique_ptr&& old){
+        if (this == &old){
+          // same
+          return this;
+        }
 
-    unique_ptr& operator=(unique_ptr&& old){
-      if (this == &old){
-        // same
+        if (this->ptr){
+          delete this->ptr;
+        }
+
+        this->ptr = old.ptr;
+        old.ptr = nullptr;
+
         return this;
       }
 
-      if (this->ptr){
-        delete this->ptr;
+      // Dereference forwarding
+      T* operator*(){
+        return this->ptr;
       }
 
-      this->ptr = old.ptr;
-      old.ptr = nullptr;
+      T* operator->(){
+        return this->ptr;
+      }
 
-      return this;
-    }
+      T* operator[](int i) {
+        if (Is_Array) {
+          return &this->ptr[i];
+        } 
 
-    // Dereference forwarding
-    T* operator*(){
-      return this->ptr;
-    }
+        return this->ptr;
+      }
 
-    T* operator->(){
-      return this->ptr;
-    }
+      explicit operator bool() const noexcept {
+        return this->ptr != nullptr;
+      }
 
-    T* operator[](int i) {
-      if (Is_Array) {
-        return &this->ptr[i];
-      } 
+      ~unique_ptr(){
+        if (!this->ptr)
+          return;
 
-      return this->ptr;
-    }
-
-
-    ~unique_ptr(){
-      if (this->ptr){
         if (Is_Array){
           delete[] this->ptr;
         } else {
           delete this->ptr;
         }
       }
-    }
+
+    private:
+      T* ptr = nullptr;
   };
 
   // single item unique
@@ -85,3 +94,5 @@ namespace slimstd {
   template<class T, class... Args>
   enable_if_t<is_bounded_array_v<T>> make_unique(Args&&...) = delete;
 }
+
+#endif
