@@ -14,9 +14,7 @@ void* operator new(size_t sz){
   return malloc(sz);
 }
 
-inline void* operator new(size_t sz, void* p) noexcept {
-  return p;
-}
+
 
 void* operator new[](size_t sz){
   return malloc(sz);
