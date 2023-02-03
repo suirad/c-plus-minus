@@ -1,5 +1,5 @@
 # c-plus-minus
-C+- is a subset of C++ that enables smaller binaries and reduces dependencies
+C+- is a subset of C++ that enables smaller binaries and reduces dependencies. This repo serves as a project base.
 
 ------
 
@@ -7,8 +7,8 @@ C+- is a subset of C++ that enables smaller binaries and reduces dependencies
 
 * Custom/slimmed down std lib with essentials (`slimstd`)
 * malloc provided `new`/`new[]`/`delete`/`delete[]`
-* Smaller binaries vs normal c++ compiled programs
-* Programs only linked against libc(if not statically compiled)
+* Smaller binaries vs normal c++ compiled programs (with similar linkage)
+* Programs only linked against libc (if not statically compiled)
 * Classes
 * Constructors/destructors & RAII
 * virtual functions
