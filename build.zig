@@ -23,7 +23,7 @@ pub fn build(b: *std.build.Builder) void {
     cppout.linkLibC();
     cppout.disable_sanitize_c = true;
     cppout.setTarget(target);
-    cppout.addSystemIncludeDir("lib");
+    cppout.addSystemIncludePath("lib");
 
     if (mode == .Debug) {
         cppout.addCSourceFileSource(.{
