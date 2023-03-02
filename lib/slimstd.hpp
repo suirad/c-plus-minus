@@ -5,19 +5,18 @@
 #ifndef _SLIMSTD_HPP
 #define _SLIMSTD_HPP
 
-extern "C" {
-  #include <malloc.h>
-  #include <stdint.h>
-}
+#include "malloc.hpp"
+
+CustomAllocator malloc;
 
 void* operator new(size_t sz){
-  return malloc(sz);
+  malloc.initialize_pool();
+  return static_cast<int*>(malloc.allocate(sz * sizeof(int)));;
 }
 
-
-
 void* operator new[](size_t sz){
-  return malloc(sz);
+  malloc.initialize_pool();
+  return static_cast<int*>(malloc.allocate(sz * sizeof(int)));
 }
 
 inline void* operator new[](size_t sz, void* p) noexcept{
@@ -25,13 +24,13 @@ inline void* operator new[](size_t sz, void* p) noexcept{
 }
 
 void operator delete(void* ptr){
-  free(ptr);
+  malloc.deallocate(ptr);
 }
 
 inline void operator delete(void* a, void* b) noexcept {}
 
 void operator delete[](void* ptr){
-  free(ptr);
+  malloc.deallocate(ptr);
 }
 
 inline void operator delete[](void* a, void* b) noexcept {}

@@ -1,23 +1,22 @@
 #pragma once
 
-extern "C" {
-  #include <stdio.h>
-}
+typedef unsigned char uint8_t;
+extern "C" void puts(const char* fmt);
 
 struct Thing {
   int inner = 0;
 
   Thing(){
     this->inner = 0;
-    printf("Hi Thing\n");
+    puts("Hi Thing\n");
   }
 
   Thing(size_t in){
     this->inner = in;
-    printf("Hi Thing\n");
+    puts("Hi Thing\n");
   }
 
   ~Thing(){
-    printf("Bye Thing\n");
+    puts("Bye Thing\n");
   }
 };
